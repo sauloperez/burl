@@ -4,6 +4,7 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 DIR=~/.burl
+AUTH_FILE="$DIR/auth"
 
 if [ ! -f ~/.burl/*.burl ]; then
   echo -e "${RED}[Error]${NC} no settings found! Define your own in a ${DIR}/*.burl file"
@@ -78,6 +79,11 @@ update() {
 while test $# -ne 0; do
   arg=$1; shift
   case $arg in
+    --login)
+      if [[ ! -f $AUTH_FILE ]]; then
+        echo "$(login_as $1)" > $AUTH_FILE
+      fi
+      ;;
     --debug)
       debug=1
       ;;
@@ -154,6 +160,11 @@ while test $# -ne 0; do
   esac
 done
 
+if [[ -n $AUTH_FILE ]]; then
+  args="$args -H '$(cat $AUTH_FILE)'"
+fi
+
 test $pretty && args="$args | python -mjson.tool"
-test $debug && echo "curl $args"
+test $debug && echo "curl $args" && exit
+
 eval "curl $args"
