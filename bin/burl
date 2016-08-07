@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+DIR=~/.burl
+
+if [ ! -f ~/.burl/*.burl ]; then
+  echo -e "${RED}[Error]${NC} no settings found! Define your own in a ${DIR}/*.burl file"
+  exit -1
+fi
+
+# Load all .burl files with custom config
+for f in ~/.burl/*.burl; do source $f; done
+
 version="1.0.1"
 debug=
 args="-s"
