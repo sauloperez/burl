@@ -3,16 +3,17 @@
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-DIR=~/.burl
+DIR=~/burl
 AUTH_FILE="$DIR/auth"
+RC_FILE=~/.burlrc
 
-if [ ! -f ~/.burl/*.burl ]; then
-  echo -e "${RED}[Error]${NC} no settings found! Define your own in a ${DIR}/*.burl file"
-  exit -1
-fi
+# if [ ! -f "${DIR}/*.burl" ]; then
+  # echo -e "${RED}[Error]${NC} no settings found! Define your own in a ${DIR}/*.burl file"
+  # exit -1
+# fi
 
-# Load all .burl files with custom config
-for f in ~/.burl/*.burl; do source $f; done
+source $RC_FILE
+source "${DIR}/$profile.burl"
 
 version="1.0.1"
 debug=

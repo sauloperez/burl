@@ -1,7 +1,7 @@
 
 PREFIX = /usr/local
 BIN = burl
-DIR = ~/.burl/
+DIR = ~/burl/
 
 install:
 	cp -f bin/$(BIN) $(PREFIX)/bin/$(BIN)
